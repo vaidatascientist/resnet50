@@ -4,14 +4,14 @@ from torch import nn
 class ResNetBlock(nn.Module):
     def __init__(self, in_features, out_features, stride, islayer2, is_first_block):
         super().__init__()
+
+        self.expansion = 4
         
         if not islayer2 and is_first_block:
             in_features = in_features * 2
             
         if not is_first_block:
-            in_features = in_features * 4
-        
-        self.expansion = 4
+            in_features = in_features * self.expansion
         
         self.conv1 = nn.Conv2d(in_channels=in_features, 
                                out_channels=out_features, 
